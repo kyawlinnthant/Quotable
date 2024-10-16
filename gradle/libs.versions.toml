@@ -1,0 +1,87 @@
+[versions]
+agp = "8.7.1"
+kotlin = "2.0.0"
+coreKtx = "1.13.1"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+lifecycleRuntimeKtx = "2.8.6"
+activityCompose = "1.9.2"
+composeBom = "2024.09.03"
+uiTextGoogleFonts = "1.7.3"
+# google
+google-ksp = "2.0.0-1.0.21"
+google-hilt = "2.51.1"
+# room
+room = "2.6.1"
+# datastore
+datastorePref = "1.1.1"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastorePref" }
+androidx-datastore-core = { module = "androidx.datastore:datastore-core", version = "datastorePref" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version = "datastorePref" }
+
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-multidex = { group = "androidx.multidex", name = "multidex", version = "2.0.1" }
+kotlinx-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.3" }
+kotlinx-date-time = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.5.0" }
+desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.1.2" }
+
+# hilt
+google-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "google-hilt" }
+google-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "google-hilt" }
+hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version = "1.2.0" }
+
+# compose
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+
+# fonts
+androidx-ui-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
+
+# network
+network-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version = "4.12.0" }
+network-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version = "2.9.0" }
+network-retrofit-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version = "1.0.0" }
+network-retrofit-coroutines = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlin-coroutines-adapter", version = "0.9.2" }
+network-profiler = { group = "com.localebro", name = "okhttpprofiler", version = "1.0.8" }
+
+# database
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+[bundles]
+network = [
+    "network-okhttp",
+    "network-profiler",
+    "network-retrofit",
+    "network-retrofit-coroutines",
+    "network-retrofit-serialization"
+]
+datastore = [
+    "androidx-datastore",
+    "androidx-datastore-preferences",
+    "androidx-datastore-core",
+]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }
+google-hilt = { id = "com.google.dagger.hilt.android", version.ref = "google-hilt" }
+
