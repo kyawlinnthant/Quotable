@@ -1,10 +1,10 @@
 package com.kyawlinnthant.quotable.presentation.onboard
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kyawlinnthant.quotable.data.remote.NetworkResult
 import com.kyawlinnthant.quotable.domain.repo.QuoteRepository
+import com.kyawlinnthant.quotable.presentation.mvi.InitialUiAction
 import com.kyawlinnthant.quotable.presentation.mvi.MVI
 import com.kyawlinnthant.quotable.presentation.mvi.mvi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,19 +17,24 @@ class OnBoardViewModel @Inject constructor(
 ) : ViewModel(),
     MVI<OnBoardState, OnBoardAction, OnBoardEvent> by mvi(
         initialUiState = OnBoardState.INITIAL,
-        initialUiAction = OnBoardAction.DoSomething
+        initialUiAction = OnBoardAction.OnFetchQuotes
     ) {
 
     override fun onAction(uiAction: OnBoardAction) {
-        Log.d("MVIDelegate", "onAction block of vm")
         when (uiAction) {
             is OnBoardAction.OnClickItem -> onItemClick(uiAction.id)
-            OnBoardAction.DoSomething -> fetchQuotes()
+            OnBoardAction.OnFetchQuotes -> fetchQuotes()
         }
     }
 
-    init {
-        fetchQuotes()
+    fun onInit() {
+        viewModelScope.launch {
+            initActions.collect {
+                when (it as InitialUiAction) {
+                    OnBoardAction.OnFetchQuotes -> fetchQuotes()
+                }
+            }
+        }
     }
 
     private fun fetchQuotes() {

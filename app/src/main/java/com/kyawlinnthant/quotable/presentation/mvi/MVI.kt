@@ -1,6 +1,5 @@
 package com.kyawlinnthant.quotable.presentation.mvi
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -18,22 +17,24 @@ import kotlinx.coroutines.launch
 interface MVI<UiState, UiAction, SideEffect> {
     val uiState: StateFlow<UiState>
     val sideEffect: Flow<SideEffect>
-    fun onAction(uiAction: UiAction)
+    val initActions: Flow<UiAction>
+    fun onAction(uiAction: UiAction) {}
     fun MVI<UiState, UiAction, SideEffect>.updateUiState(block: UiState.() -> UiState)
     fun MVI<UiState, UiAction, SideEffect>.emitSideEffect(effect: SideEffect)
 }
 
 class MVIDelegate<UiState, UiAction, SideEffect> internal constructor(
     initialUiState: UiState,
-    initialUiAction : UiAction
+    initialUiAction: UiAction
 ) : MVI<UiState, UiAction, SideEffect> {
 
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main.immediate)
     private val _uiState = MutableStateFlow(initialUiState)
     override val uiState: StateFlow<UiState> = _uiState
         .onStart {
-            Log.d("MVIDelegate", "init block of mvi")
-            onAction(uiAction = initialUiAction)
+            scope.launch {
+                _initActions.send(initialUiAction)
+            }
         }
         .stateIn(
             scope = scope,
@@ -43,9 +44,8 @@ class MVIDelegate<UiState, UiAction, SideEffect> internal constructor(
 
     private val _sideEffect by lazy { Channel<SideEffect>() }
     override val sideEffect: Flow<SideEffect> by lazy { _sideEffect.receiveAsFlow() }
-    override fun onAction(uiAction: UiAction) {
-        Log.d("MVIDelegate", "call interface block of mvi")
-    }
+    private val _initActions by lazy { Channel<UiAction>() }
+    override val initActions: Flow<UiAction> by lazy { _initActions.receiveAsFlow() }
 
     override fun MVI<UiState, UiAction, SideEffect>.updateUiState(
         block: UiState.() -> UiState
@@ -64,8 +64,10 @@ class MVIDelegate<UiState, UiAction, SideEffect> internal constructor(
 
 fun <UiState, UiAction, SideEffect> mvi(
     initialUiState: UiState,
-    initialUiAction : UiAction
+    initialUiAction: UiAction
 ): MVI<UiState, UiAction, SideEffect> = MVIDelegate(
     initialUiState = initialUiState,
     initialUiAction = initialUiAction
 )
+
+interface InitialUiAction

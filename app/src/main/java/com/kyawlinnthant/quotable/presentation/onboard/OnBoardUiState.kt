@@ -2,6 +2,7 @@ package com.kyawlinnthant.quotable.presentation.onboard
 
 import androidx.compose.runtime.Immutable
 import com.kyawlinnthant.quotable.domain.vo.Quote
+import com.kyawlinnthant.quotable.presentation.mvi.InitialUiAction
 
 sealed interface OnBoardUiState {
     data object Idle : OnBoardUiState
@@ -18,16 +19,12 @@ data class OnBoardState(
         val INITIAL = OnBoardState(
             uiState = OnBoardUiState.Idle
         )
-        val DEFAULT = OnBoardState(
-            uiState = OnBoardUiState.Loading
-        )
     }
 }
-
 @Immutable
 sealed interface OnBoardAction {
     data class OnClickItem(val id: String) : OnBoardAction
-    data object DoSomething : OnBoardAction
+    data object OnFetchQuotes : OnBoardAction, InitialUiAction
 }
 
 @Immutable
