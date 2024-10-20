@@ -23,16 +23,16 @@ class OnBoardViewModel @Inject constructor(
     override fun onAction(uiAction: OnBoardAction) {
         Log.d("MVIDelegate", "onAction block of vm")
         when (uiAction) {
-            is OnBoardAction.OnClickItem -> Unit
+            is OnBoardAction.OnClickItem -> onItemClick(uiAction.id)
             OnBoardAction.DoSomething -> fetchQuotes()
         }
     }
+
     init {
         fetchQuotes()
     }
 
     private fun fetchQuotes() {
-
         viewModelScope.launch {
             updateUiState {
                 copy(uiState = OnBoardUiState.Loading)
@@ -46,6 +46,12 @@ class OnBoardViewModel @Inject constructor(
                     updateUiState { copy(uiState = OnBoardUiState.Success(data = response.data)) }
                 }
             }
+        }
+    }
+
+    private fun onItemClick(id: String) {
+        viewModelScope.launch {
+            emitSideEffect(effect = OnBoardEvent.OnPrompt(message = id))
         }
     }
 }
