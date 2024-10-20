@@ -1,6 +1,6 @@
 package com.kyawlinnthant.quotable.presentation.onboard
 
-import androidx.compose.runtime.Stable
+import androidx.compose.runtime.Immutable
 import com.kyawlinnthant.quotable.domain.vo.Quote
 
 sealed interface OnBoardUiState {
@@ -10,7 +10,27 @@ sealed interface OnBoardUiState {
     data class Success(val data: List<Quote>) : OnBoardUiState
 }
 
-@Stable
-data class OnBoardViewModelState(
-    val uiState: OnBoardUiState = OnBoardUiState.Idle
-)
+@Immutable
+data class OnBoardState(
+    val uiState: OnBoardUiState
+) {
+    companion object {
+        val INITIAL = OnBoardState(
+            uiState = OnBoardUiState.Idle
+        )
+        val DEFAULT = OnBoardState(
+            uiState = OnBoardUiState.Loading
+        )
+    }
+}
+
+@Immutable
+sealed interface OnBoardAction {
+    data class OnClickItem(val id: String) : OnBoardAction
+    data object DoSomething : OnBoardAction
+}
+
+@Immutable
+sealed interface OnBoardEvent {
+    data class OnPrompt(val message: String) : OnBoardEvent
+}

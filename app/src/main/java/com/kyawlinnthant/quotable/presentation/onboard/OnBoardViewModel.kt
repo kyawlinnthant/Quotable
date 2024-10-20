@@ -1,43 +1,49 @@
 package com.kyawlinnthant.quotable.presentation.onboard
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kyawlinnthant.quotable.data.remote.NetworkResult
 import com.kyawlinnthant.quotable.domain.repo.QuoteRepository
+import com.kyawlinnthant.quotable.presentation.mvi.MVI
+import com.kyawlinnthant.quotable.presentation.mvi.mvi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class OnBoardViewModel @Inject constructor(
-    private val repository: QuoteRepository
-) : ViewModel() {
+    private val repository: QuoteRepository,
+) : ViewModel(),
+    MVI<OnBoardState, OnBoardAction, OnBoardEvent> by mvi(
+        initialUiState = OnBoardState.INITIAL,
+        initialUiAction = OnBoardAction.DoSomething
+    ) {
 
-    val state: StateFlow<OnBoardViewModelState>
-        field = MutableStateFlow(OnBoardViewModelState())
-
+    override fun onAction(uiAction: OnBoardAction) {
+        Log.d("MVIDelegate", "onAction block of vm")
+        when (uiAction) {
+            is OnBoardAction.OnClickItem -> Unit
+            OnBoardAction.DoSomething -> fetchQuotes()
+        }
+    }
     init {
         fetchQuotes()
     }
 
     private fun fetchQuotes() {
+
         viewModelScope.launch {
-            state.value = state.value.copy(
-                uiState = OnBoardUiState.Loading
-            )
+            updateUiState {
+                copy(uiState = OnBoardUiState.Loading)
+            }
             when (val response = repository.randomQuotes()) {
                 is NetworkResult.Failed -> {
-                    state.value = state.value.copy(
-                        uiState = OnBoardUiState.Error(response.error)
-                    )
+                    updateUiState { copy(uiState = OnBoardUiState.Error(message = response.error)) }
                 }
 
                 is NetworkResult.Success -> {
-                    state.value = state.value.copy(
-                        uiState = OnBoardUiState.Success(response.data)
-                    )
+                    updateUiState { copy(uiState = OnBoardUiState.Success(data = response.data)) }
                 }
             }
         }

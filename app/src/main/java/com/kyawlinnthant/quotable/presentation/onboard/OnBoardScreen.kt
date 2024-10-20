@@ -12,13 +12,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.kyawlinnthant.quotable.presentation.mvi.CollectSideEffect
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun OnBoardScreen(
     uiState: OnBoardUiState,
     paddingValues: PaddingValues,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    sideEffect: Flow<OnBoardEvent>,
+    onAction: (OnBoardAction) -> Unit,
 ) {
+
+    CollectSideEffect(sideEffect) { when (it) {
+        is OnBoardEvent.OnPrompt -> Unit
+    } }
+
     Box(
         modifier = modifier
             .fillMaxSize()
