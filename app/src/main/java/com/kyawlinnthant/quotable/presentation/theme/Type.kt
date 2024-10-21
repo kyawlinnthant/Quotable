@@ -15,12 +15,6 @@ val provider = GoogleFont.Provider(
     certificates = R.array.com_google_android_gms_fonts_certs
 )
 
-//val fontName = GoogleFont("Qwitcher Grypen")
-//val fontName = GoogleFont("Lobster Two")
-//val fontName = GoogleFont("Belleza")
-//val fontName = GoogleFont("Agdasima")
-//val fontName = GoogleFont("Londrina Sketch")
-//val fontName = GoogleFont("Ruge Boogie")
 val fontName = GoogleFont("Bebas Neue")
 
 val fontFamily = FontFamily(
@@ -30,8 +24,7 @@ val fontFamily = FontFamily(
     )
 )
 
-// Set of Material typography styles to start with
-val Typography = Typography(
+val quotableTypo = Typography(
     bodyLarge = TextStyle(
         fontFamily = fontFamily,
         fontWeight = FontWeight.Normal,
