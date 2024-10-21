@@ -48,7 +48,7 @@ object DispatcherModule {
 
     @Provides
     @MainDispatcher
-    fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
+    fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main.immediate
 
     @Provides
     @MainScope

@@ -1,7 +1,7 @@
 package com.kyawlinnthant.quotable.presentation.mvi
 
+import com.kyawlinnthant.quotable.core.dispatcher.DispatcherModule.MainScope
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 interface MVI<UiState, UiAction, SideEffect> {
@@ -23,12 +24,11 @@ interface MVI<UiState, UiAction, SideEffect> {
     fun MVI<UiState, UiAction, SideEffect>.emitSideEffect(effect: SideEffect)
 }
 
-class MVIDelegate<UiState, UiAction, SideEffect> internal constructor(
+class MVIDelegate<UiState, UiAction, SideEffect> @Inject internal constructor(
     initialUiState: UiState,
-    initialUiAction: UiAction
+    initialUiAction: UiAction,
+    @MainScope private val scope: CoroutineScope
 ) : MVI<UiState, UiAction, SideEffect> {
-
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main.immediate)
     private val _uiState = MutableStateFlow(initialUiState)
     override val uiState: StateFlow<UiState> = _uiState
         .onStart {
@@ -64,10 +64,12 @@ class MVIDelegate<UiState, UiAction, SideEffect> internal constructor(
 
 fun <UiState, UiAction, SideEffect> mvi(
     initialUiState: UiState,
-    initialUiAction: UiAction
+    initialUiAction: UiAction,
+    scope: CoroutineScope
 ): MVI<UiState, UiAction, SideEffect> = MVIDelegate(
     initialUiState = initialUiState,
-    initialUiAction = initialUiAction
+    initialUiAction = initialUiAction,
+    scope = scope
 )
 
 interface InitialUiAction
