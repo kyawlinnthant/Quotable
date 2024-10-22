@@ -45,12 +45,9 @@ fun QuotableGraph(
             composable<Destination.OnBoardScreen> {
                 val vm: OnBoardViewModel = hiltViewModel()
                 val uiState = vm.uiState.collectAsStateWithLifecycle()
-                LaunchedEffect(Unit) {
-                    vm.onInit()
-                }
                 OnBoardScreen(
                     uiState = uiState.value.uiState,
-                    sideEffect = vm.sideEffect,
+                    sideEffect = vm.uiEvent,
                     onAction = vm::onAction
                 )
             }
@@ -74,11 +71,11 @@ fun QuotableGraph(
                 val vm: AuthorViewModel = hiltViewModel()
                 val uiState = vm.uiState.collectAsStateWithLifecycle()
                 LaunchedEffect(Unit) {
-                    vm.onInit(id = args.id)
+                    vm.fetchAuthor(args.id)
                 }
                 AuthorScreen(
                     uiState = uiState.value.uiState,
-                    sideEffect = vm.sideEffect,
+                    sideEffect = vm.uiEvent,
                     onAction = vm::onAction
                 )
             }

@@ -18,6 +18,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.kyawlinnthant.quotable.domain.vo.Author
+import com.kyawlinnthant.quotable.presentation.authors.AuthorsAction.*
+import com.kyawlinnthant.quotable.presentation.common.RequestState
 import com.kyawlinnthant.quotable.presentation.mvi.CollectSideEffect
 import com.kyawlinnthant.quotable.presentation.theme.dimen
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +28,7 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun AuthorsScreen(
     modifier: Modifier = Modifier,
-    uiState: AuthorsUiState,
+    uiState: RequestState<List<Author>>,
     sideEffect: Flow<AuthorsEvent>,
     onAction: (AuthorsAction) -> Unit,
 ) {
@@ -48,34 +51,30 @@ fun AuthorsScreen(
                 .padding(paddingValues), contentAlignment = Alignment.Center
         ) {
             when (uiState) {
-                is AuthorsUiState.Error -> Text(
+                is RequestState.Error -> Text(
                     uiState.message,
                     style = MaterialTheme.typography.bodyLarge
                 )
 
-                AuthorsUiState.Idle -> Text("Idle", style = MaterialTheme.typography.bodyLarge)
-                AuthorsUiState.Loading -> CircularProgressIndicator()
-                is AuthorsUiState.Success -> {
-                    LazyColumn {
-                        items(
-                            items = uiState.data,
-                            key = { it.id }
-                        ) { author ->
-                            Text(
-                                modifier = modifier
-                                    .fillMaxWidth()
-                                    .padding(MaterialTheme.dimen.base)
-                                    .clickable {
-                                        onAction(AuthorsAction.OnFetchAuthors(author.id))
-                                    },
-                                text = author.name,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                        }
+                RequestState.Idle -> Text("Idle", style = MaterialTheme.typography.bodyLarge)
+                RequestState.Loading -> CircularProgressIndicator()
+                is RequestState.Success -> LazyColumn {
+                    items(
+                        items = uiState.data,
+                        key = { it.id }
+                    ) { author ->
+                        Text(
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .padding(MaterialTheme.dimen.base)
+                                .clickable {
+                                    onAction(OnFetchAuthors(author.id))
+                                },
+                            text = author.name,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
                     }
                 }
-
-
             }
         }
     }
