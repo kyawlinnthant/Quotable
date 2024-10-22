@@ -16,20 +16,7 @@ data class QuotesResponse(
     val length: Int,
     val tags: List<String>
 ) {
-    companion object {
-        val EMPTY = QuotesResponse(
-            id = "",
-            author = "",
-            authorSlug = "",
-            content = "",
-            dateAdded = "",
-            dateModified = "",
-            length = 0,
-            tags = emptyList()
-        )
-    }
-
-    fun toVo() = Quote(
+    fun toDomain() = Quote(
         id = this.id,
         author = this.author,
         authorSlug = this.authorSlug,

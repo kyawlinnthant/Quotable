@@ -4,11 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.kyawlinnthant.quotable.presentation.onboard.OnBoardScreen
-import com.kyawlinnthant.quotable.presentation.onboard.OnBoardViewModel
+import com.kyawlinnthant.quotable.core.navigation.Destination
+import com.kyawlinnthant.quotable.presentation.navigation.QuotableGraph
 import com.kyawlinnthant.quotable.presentation.theme.QuotableTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,16 +16,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val vm: OnBoardViewModel = hiltViewModel()
-            val uiState = vm.uiState.collectAsStateWithLifecycle()
-            LaunchedEffect(Unit) {
-                vm.onInit()
-            }
+            val vm: MainViewModel = hiltViewModel()
             QuotableTheme {
-                OnBoardScreen(
-                    uiState = uiState.value.uiState,
-                    sideEffect = vm.sideEffect,
-                    onAction = vm::onAction
+                QuotableGraph(
+                    startDestination = Destination.OnBoardGraph,
+                    navigationActions = vm.navigator.navigationActions
                 )
             }
         }

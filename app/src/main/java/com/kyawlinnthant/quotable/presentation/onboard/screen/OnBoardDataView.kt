@@ -17,7 +17,8 @@ import com.kyawlinnthant.quotable.domain.vo.Quote
 @Composable
 fun OnBoardDataView(
     modifier: Modifier = Modifier,
-    quotes: List<Quote>
+    quotes: List<Quote>,
+    onItemClicked: () -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = { quotes.size })
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
@@ -27,7 +28,8 @@ fun OnBoardDataView(
         ) { page ->
             val currentQuote = quotes[page]
             QuoteItem(
-                quote = currentQuote
+                quote = currentQuote,
+                onItemClicked = onItemClicked
             )
         }
         Row(

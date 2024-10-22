@@ -1,5 +1,6 @@
 package com.kyawlinnthant.quotable.data.remote
 
+import android.util.Log
 import retrofit2.Response
 import java.net.SocketTimeoutException
 
@@ -18,6 +19,7 @@ inline fun <reified T> safeApiCall(apiCall: () -> Response<T>): NetworkResult<T>
     } catch (e: SocketTimeoutException) {
         return NetworkResult.Failed(error = e.localizedMessage ?: "Socket Timeout!")
     } catch (e: Exception) {
+        Log.e("klt", "safeApiCall: ${e.localizedMessage}")
         return NetworkResult.Failed(error = e.localizedMessage ?: "Default Exception!")
     }
 }

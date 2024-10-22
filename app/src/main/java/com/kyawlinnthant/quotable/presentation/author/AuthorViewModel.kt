@@ -1,9 +1,8 @@
-package com.kyawlinnthant.quotable.presentation.onboard
+package com.kyawlinnthant.quotable.presentation.author
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kyawlinnthant.quotable.core.dispatcher.DispatcherModule.MainScope
-import com.kyawlinnthant.quotable.core.navigation.Destination
 import com.kyawlinnthant.quotable.core.navigation.Navigator
 import com.kyawlinnthant.quotable.data.remote.NetworkResult
 import com.kyawlinnthant.quotable.domain.repo.QuoteRepository
@@ -15,37 +14,38 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
-class OnBoardViewModel @Inject constructor(
+class AuthorViewModel @Inject constructor(
     private val repository: QuoteRepository,
     private val navigator: Navigator,
     @MainScope private val scope: CoroutineScope
 ) : ViewModel(),
-    MVI<OnBoardState, OnBoardAction, OnBoardEvent> by mvi(
-        initialUiState = OnBoardState.INITIAL,
+    MVI<AuthorState, AuthorAction, AuthorEvent> by mvi(
+        initialUiState = AuthorState.INITIAL,
         scope = scope
     ) {
 
-    override fun onAction(uiAction: OnBoardAction) {
+    override fun onAction(uiAction: AuthorAction) {
         when (uiAction) {
-            is OnBoardAction.OnClickAuthor -> onItemClick()
+            AuthorAction.OnBack -> onBack()
         }
     }
 
-    fun onInit() {
+    fun onInit(id: String) {
         viewModelScope.launch {
             initActions.collect {
-                fetchQuotes()
+                fetchAuthor(id = id)
             }
         }
     }
 
-    private fun fetchQuotes() {
+    private fun fetchAuthor(id: String) {
         viewModelScope.launch {
             updateUiState {
                 copy(uiState = RequestState.Loading)
             }
-            when (val response = repository.fetchRandomQuotes()) {
+            when (val response = repository.fetchAuthorDetail(id = id)) {
                 is NetworkResult.Failed -> {
                     updateUiState { copy(uiState = RequestState.Error(message = response.error)) }
                 }
@@ -57,9 +57,9 @@ class OnBoardViewModel @Inject constructor(
         }
     }
 
-    private fun onItemClick() {
+    private fun onBack() {
         viewModelScope.launch {
-            navigator.navigate(Destination.AuthorsScreen)
+            navigator.popUp()
         }
     }
 

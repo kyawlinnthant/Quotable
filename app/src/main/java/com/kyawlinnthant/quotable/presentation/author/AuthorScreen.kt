@@ -1,4 +1,4 @@
-package com.kyawlinnthant.quotable.presentation.onboard
+package com.kyawlinnthant.quotable.presentation.author
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,25 +14,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.kyawlinnthant.quotable.domain.vo.Quote
+import com.kyawlinnthant.quotable.domain.vo.Author
 import com.kyawlinnthant.quotable.presentation.common.RequestState
 import com.kyawlinnthant.quotable.presentation.common.ResultDisplayView
 import com.kyawlinnthant.quotable.presentation.mvi.CollectSideEffect
-import com.kyawlinnthant.quotable.presentation.onboard.screen.OnBoardDataView
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun OnBoardScreen(
-    uiState: RequestState<List<Quote>>,
+fun AuthorScreen(
+    uiState: RequestState<Author>,
     modifier: Modifier = Modifier,
-    sideEffect: Flow<OnBoardEvent>,
-    onAction: (OnBoardAction) -> Unit,
+    sideEffect: Flow<AuthorEvent>,
+    onAction: (AuthorAction) -> Unit,
 ) {
 
     val snackState: SnackbarHostState = remember { SnackbarHostState() }
     CollectSideEffect(sideEffect) {
         when (it) {
-            is OnBoardEvent.OnPrompt -> snackState.showSnackbar(message = it.message)
+            is AuthorEvent.OnPrompt -> snackState.showSnackbar(message = it.message)
         }
     }
 
@@ -48,7 +47,7 @@ fun OnBoardScreen(
                 .fillMaxSize()
                 .padding(paddingValues), contentAlignment = Alignment.Center
         ) {
-            ResultDisplayView<List<Quote>>(
+            ResultDisplayView<Author>(
                 onIdle = {
                     Text("Idle", style = MaterialTheme.typography.bodyLarge)
                 },
@@ -56,13 +55,7 @@ fun OnBoardScreen(
                     CircularProgressIndicator()
                 },
                 onSuccess = { vo ->
-                    OnBoardDataView(
-                        quotes = uiState.getSuccessData(),
-                        onItemClicked = {
-                            onAction(
-                                OnBoardAction.OnClickAuthor
-                            )
-                        })
+                    Text(vo.toString())
                 },
                 onError = {
                     Text(

@@ -1,6 +1,7 @@
 package com.kyawlinnthant.quotable.presentation.onboard.screen
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,10 +13,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -31,13 +32,33 @@ import com.kyawlinnthant.quotable.presentation.theme.dimen
 
 
 @Composable
-fun QuoteItem(modifier: Modifier = Modifier, quote: Quote, onItemClicked: () -> Unit = {}) {
+fun QuoteItem(
+    modifier: Modifier = Modifier,
+    quote: Quote,
+    onItemClicked: () -> Unit
+) {
 
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(MaterialTheme.dimen.base2x),
         verticalArrangement = Arrangement.Center,
     ) {
+        item {
+            IconToggleButton(
+                checked = false,
+                enabled = true,
+                onCheckedChange = {},
+                colors = IconButtonDefaults.iconToggleButtonColors(
+                    contentColor = MaterialTheme.colorScheme.onBackground.copy(alpha = MaterialTheme.dimen.defaultAlpha),
+                    checkedContentColor = MaterialTheme.colorScheme.primary
+                )
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.disabled_favourite),
+                    contentDescription = null
+                )
+            }
+        }
         item {
             LazyRow(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimen.base)) {
                 items(
@@ -48,7 +69,7 @@ fun QuoteItem(modifier: Modifier = Modifier, quote: Quote, onItemClicked: () -> 
                         onClick = {},
                         enabled = false,
                         label = {
-                            Text(it, style = MaterialTheme.typography.bodyLarge)
+                            Text(it, style = MaterialTheme.typography.labelSmall)
                         }
                     )
                 }
@@ -58,16 +79,13 @@ fun QuoteItem(modifier: Modifier = Modifier, quote: Quote, onItemClicked: () -> 
             Text(quote.content, style = MaterialTheme.typography.displaySmall)
         }
         item {
-            Spacer(modifier = modifier.height(MaterialTheme.dimen.base2x))
-        }
-        item {
-            Row(
+            Column(
                 modifier = modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.spacedBy(space = MaterialTheme.dimen.tiny),
             ) {
                 Text(quote.dateAdded, style = MaterialTheme.typography.labelSmall)
-                Text(quote.author, style = MaterialTheme.typography.labelMedium)
+                Text(quote.author, style = MaterialTheme.typography.labelLarge)
             }
         }
         item {
@@ -75,38 +93,18 @@ fun QuoteItem(modifier: Modifier = Modifier, quote: Quote, onItemClicked: () -> 
         }
         item {
             Row(
-                modifier = modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimen.base)
+                horizontalArrangement = Arrangement.spacedBy(space = MaterialTheme.dimen.base)
             ) {
-                OutlinedButton(onClick = onItemClicked, shape = MaterialTheme.shapes.small) {
-                    Text("SEE DETAILS", style = MaterialTheme.typography.labelSmall)
-                }
-                IconToggleButton(
-                    checked = false,
-                    enabled = true,
-                    onCheckedChange = {},
-                    colors = IconButtonDefaults.iconToggleButtonColors(
-                        contentColor = MaterialTheme.colorScheme.onBackground.copy(alpha = MaterialTheme.dimen.defaultAlpha),
-                        checkedContentColor = MaterialTheme.colorScheme.primary
-                    )
-                ) {
+                IconButton(onClick = onItemClicked) {
                     Icon(
-                        painter = painterResource(id = R.drawable.round_share_24),
+                        painter = painterResource(id = R.drawable.baseline_format_list_bulleted_24),
                         contentDescription = null
                     )
                 }
-                IconToggleButton(
-                    checked = false,
-                    enabled = true,
-                    onCheckedChange = {},
-                    colors = IconButtonDefaults.iconToggleButtonColors(
-                        contentColor = MaterialTheme.colorScheme.onBackground.copy(alpha = MaterialTheme.dimen.defaultAlpha),
-                        checkedContentColor = MaterialTheme.colorScheme.primary
-                    )
-                ) {
+                IconButton(onClick = {}) {
                     Icon(
-                        painter = painterResource(id = R.drawable.outline_thumb_up_24),
+                        painter = painterResource(id = R.drawable.round_share_24),
                         contentDescription = null
                     )
                 }
@@ -124,7 +122,7 @@ fun QuoteItem(modifier: Modifier = Modifier, quote: Quote, onItemClicked: () -> 
 private fun QuoteItemPreview() {
     QuotableTheme {
         Surface {
-            QuoteItem(quote = Quote.MOCK)
+            QuoteItem(quote = Quote.MOCK) {}
         }
     }
 }
