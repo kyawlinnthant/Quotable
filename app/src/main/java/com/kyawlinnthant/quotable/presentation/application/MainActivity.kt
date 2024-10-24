@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
             QuotableTheme {
                 QuotableGraph(
                     startDestination = Destination.OnBoardGraph,
-                    navigationActions = vm.navigator.navigationActions
+                    navigationActions = vm.navigator.navigationActions,
                 )
             }
         }

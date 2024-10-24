@@ -19,7 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.kyawlinnthant.quotable.domain.vo.Author
-import com.kyawlinnthant.quotable.presentation.authors.AuthorsAction.*
+import com.kyawlinnthant.quotable.presentation.authors.AuthorsAction.OnClickAuthor
 import com.kyawlinnthant.quotable.presentation.common.RequestState
 import com.kyawlinnthant.quotable.presentation.mvi.CollectSideEffect
 import com.kyawlinnthant.quotable.presentation.theme.dimen
@@ -46,35 +46,40 @@ fun AuthorsScreen(
         },
     ) { paddingValues ->
         Box(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(paddingValues), contentAlignment = Alignment.Center
+            modifier =
+                modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+            contentAlignment = Alignment.Center,
         ) {
             when (uiState) {
-                is RequestState.Error -> Text(
-                    uiState.message,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                is RequestState.Error ->
+                    Text(
+                        uiState.message,
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
 
                 RequestState.Idle -> Text("Idle", style = MaterialTheme.typography.bodyLarge)
                 RequestState.Loading -> CircularProgressIndicator()
-                is RequestState.Success -> LazyColumn {
-                    items(
-                        items = uiState.data,
-                        key = { it.id }
-                    ) { author ->
-                        Text(
-                            modifier = modifier
-                                .fillMaxWidth()
-                                .padding(MaterialTheme.dimen.base)
-                                .clickable {
-                                    onAction(OnFetchAuthors(author.id))
-                                },
-                            text = author.name,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
+                is RequestState.Success ->
+                    LazyColumn {
+                        items(
+                            items = uiState.data,
+                            key = { it.id },
+                        ) { author ->
+                            Text(
+                                modifier =
+                                    modifier
+                                        .fillMaxWidth()
+                                        .padding(MaterialTheme.dimen.base)
+                                        .clickable {
+                                            onAction(OnClickAuthor(author.id))
+                                        },
+                                text = author.name,
+                                style = MaterialTheme.typography.bodyLarge,
+                            )
+                        }
                     }
-                }
             }
         }
     }

@@ -1,0 +1,28 @@
+# Top-most EditorConfig file
+root = true
+
+[*.{kt,kts}]
+charset = utf-8
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+max_line_length = 250
+ktlint_function_naming_ignore_when_annotated_with = Composable
+# We can remove the upper line if compose rule is stable.
+# compose_allowed_composition_locals = true
+# compose_content_emitters = MyComposable,MyOtherComposable
+# compose_content_emitters_denylist = MyModalComposable,MyDialogComposable
+# compose_view_model_factories = myViewModel,potatoViewModel
+# compose_allowed_composition_locals = LocalSomething,LocalSomethingElse
+# compose_allowed_composable_function_names = .*Presenter,.*SomethingElse
+# compose_allowed_state_holder_names = .*ViewModel,.*Presenter,.*Component,.*SomethingElse
+# compose_allowed_forwarding = .*Content,.*SomethingElse
+# compose_allowed_forwarding_of_types = .*MyViewModel,PotatoViewModel
+# compose_check_modifiers_for_visibility = only_public
+# compose_custom_modifiers = BananaModifier,PotatoModifier
+# compose_treat_as_lambda = MyLambdaType,MyOtherLambdaType
+# compose_treat_as_composable_lambda = MyLambdaComposableType,MyOtherComposableLambdaType
+# compose_disallow_material2 = true
+# compose_allowed_from_m2 = icons.filled,Button
+# compose_disallow_unstable_collections = true

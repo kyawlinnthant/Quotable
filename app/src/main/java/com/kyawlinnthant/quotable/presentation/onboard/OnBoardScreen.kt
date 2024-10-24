@@ -28,7 +28,6 @@ fun OnBoardScreen(
     sideEffect: Flow<OnBoardEvent>,
     onAction: (OnBoardAction) -> Unit,
 ) {
-
     val snackState: SnackbarHostState = remember { SnackbarHostState() }
     CollectSideEffect(sideEffect) {
         when (it) {
@@ -44,9 +43,11 @@ fun OnBoardScreen(
     ) { paddingValues ->
 
         Box(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(paddingValues), contentAlignment = Alignment.Center
+            modifier =
+                modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+            contentAlignment = Alignment.Center,
         ) {
             ResultDisplayView<List<Quote>>(
                 onIdle = {
@@ -60,17 +61,18 @@ fun OnBoardScreen(
                         quotes = uiState.getSuccessData(),
                         onItemClicked = {
                             onAction(
-                                OnBoardAction.OnClickAuthor
+                                OnBoardAction.OnClickAuthor,
                             )
-                        })
+                        },
+                    )
                 },
                 onError = {
                     Text(
                         uiState.getErrorMessage(),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                 },
-                requestState = uiState
+                requestState = uiState,
             )
         }
     }

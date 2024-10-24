@@ -1,24 +1,26 @@
 package com.kyawlinnthant.quotable.presentation.authors
 
 import androidx.compose.runtime.Immutable
+import androidx.paging.PagingData
 import com.kyawlinnthant.quotable.domain.vo.Author
-import com.kyawlinnthant.quotable.presentation.common.RequestState
-
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 @Immutable
 data class AuthorsState(
-    val uiState: RequestState<List<Author>>
+    val authors: Flow<PagingData<Author>>,
 ) {
     companion object {
-        val INITIAL = AuthorsState(
-            uiState = RequestState.Idle
-        )
+        val INITIAL =
+            AuthorsState(
+                authors = emptyFlow(),
+            )
     }
 }
 
 @Immutable
 sealed interface AuthorsAction {
-    data class OnFetchAuthors(val id: String) : AuthorsAction
+    data class OnClickAuthor(val id: String) : AuthorsAction
 }
 
 @Immutable

@@ -12,29 +12,31 @@ data class Quote(
     val dateAdded: String,
     val dateModified: String,
     val length: Int,
-    val tags: Set<String>
+    val tags: Set<String>,
 ) {
     companion object {
-        val EMPTY = Quote(
-            id = "",
-            author = "",
-            authorSlug = "",
-            content = "",
-            dateAdded = "",
-            dateModified = "",
-            length = 0,
-            tags = emptySet()
-        )
+        val EMPTY =
+            Quote(
+                id = "",
+                author = "",
+                authorSlug = "",
+                content = "",
+                dateAdded = "",
+                dateModified = "",
+                length = 0,
+                tags = emptySet(),
+            )
 
-        val MOCK = Quote(
-            id = UUID.randomUUID().toString(),
-            author = "Confucius",
-            authorSlug = "",
-            content = "Fine words and an insinuating appearance are seldom associated with true virtue",
-            dateAdded = "2019-03-17",
-            dateModified = "2023-04-14",
-            length = 79,
-            tags = setOf("Wisdom", "Change", "Life")
-        )
+        val MOCK =
+            Quote(
+                id = UUID.randomUUID().toString(),
+                author = "Confucius",
+                authorSlug = "",
+                content = "Fine words and an insinuating appearance are seldom associated with true virtue",
+                dateAdded = "2019-03-17",
+                dateModified = "2023-04-14",
+                length = 79,
+                tags = setOf("Wisdom", "Change", "Life"),
+            )
     }
 }

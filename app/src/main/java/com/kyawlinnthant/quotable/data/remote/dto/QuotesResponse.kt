@@ -14,16 +14,17 @@ data class QuotesResponse(
     val dateAdded: String,
     val dateModified: String,
     val length: Int,
-    val tags: List<String>
+    val tags: List<String>,
 ) {
-    fun toDomain() = Quote(
-        id = this.id,
-        author = this.author,
-        authorSlug = this.authorSlug,
-        content = this.content,
-        dateAdded = this.dateAdded,
-        dateModified = this.dateModified,
-        length = this.length,
-        tags = this.tags.toSet()
-    )
+    fun toDomain() =
+        Quote(
+            id = this.id,
+            author = this.author,
+            authorSlug = this.authorSlug,
+            content = this.content,
+            dateAdded = this.dateAdded,
+            dateModified = this.dateModified,
+            length = this.length,
+            tags = this.tags.toSet(),
+        )
 }

@@ -14,45 +14,45 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class OnBoardViewModel @Inject constructor(
-    private val repository: QuoteRepository,
-    private val navigator: Navigator,
-) : ViewModel(),
-    MVI<OnBoardState, OnBoardAction, OnBoardEvent> by mvi(
-        initialUiState = OnBoardState.INITIAL,
-    ) {
-
-    init {
-        fetchQuotes()
-    }
-
-    override fun onAction(uiAction: OnBoardAction) {
-        when (uiAction) {
-            is OnBoardAction.OnClickAuthor -> onItemClick()
+class OnBoardViewModel
+    @Inject
+    constructor(
+        private val repository: QuoteRepository,
+        private val navigator: Navigator,
+    ) : ViewModel(),
+        MVI<OnBoardState, OnBoardAction, OnBoardEvent> by mvi(
+            initialUiState = OnBoardState.INITIAL,
+        ) {
+        init {
+            fetchQuotes()
         }
-    }
 
-    private fun fetchQuotes() {
-        viewModelScope.launch {
-            updateUiState {
-                copy(uiState = RequestState.Loading)
-            }
-            when (val response = repository.fetchRandomQuotes()) {
-                is NetworkResult.Failed -> {
-                    updateUiState { copy(uiState = RequestState.Error(message = response.error)) }
-                }
-
-                is NetworkResult.Success -> {
-                    updateUiState { copy(uiState = RequestState.Success(data = response.data)) }
-                }
+        override fun onAction(uiAction: OnBoardAction) {
+            when (uiAction) {
+                is OnBoardAction.OnClickAuthor -> onItemClick()
             }
         }
-    }
 
-    private fun onItemClick() {
-        viewModelScope.launch {
-            navigator.navigate(Destination.AuthorsScreen)
+        private fun fetchQuotes() {
+            viewModelScope.launch {
+                updateUiState {
+                    copy(uiState = RequestState.Loading)
+                }
+                when (val response = repository.fetchRandomQuotes()) {
+                    is NetworkResult.Failed -> {
+                        updateUiState { copy(uiState = RequestState.Error(message = response.error)) }
+                    }
+
+                    is NetworkResult.Success -> {
+                        updateUiState { copy(uiState = RequestState.Success(data = response.data)) }
+                    }
+                }
+            }
+        }
+
+        private fun onItemClick() {
+            viewModelScope.launch {
+                navigator.navigate(Destination.AuthorsScreen)
+            }
         }
     }
-
-}

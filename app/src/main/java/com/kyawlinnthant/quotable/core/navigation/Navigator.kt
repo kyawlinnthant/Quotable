@@ -11,25 +11,26 @@ interface Navigator {
 
     suspend fun navigate(
         destination: Destination,
-        navOptions: NavOptionsBuilder.() -> Unit = {}
+        navOptions: NavOptionsBuilder.() -> Unit = {},
     )
 
     suspend fun popUp()
 }
 
-class AppNavigator @Inject constructor() : Navigator {
-    private val _navigationActions = Channel<NavigationAction>()
-    override val navigationActions: Flow<NavigationAction> = _navigationActions.receiveAsFlow()
+class AppNavigator
+    @Inject
+    constructor() : Navigator {
+        private val _navigationActions = Channel<NavigationAction>()
+        override val navigationActions: Flow<NavigationAction> = _navigationActions.receiveAsFlow()
 
-    override suspend fun navigate(
-        destination: Destination,
-        navOptions: NavOptionsBuilder.() -> Unit
-    ) {
-        _navigationActions.send(NavigationAction.NavigateTo(destination, navOptions))
+        override suspend fun navigate(
+            destination: Destination,
+            navOptions: NavOptionsBuilder.() -> Unit,
+        ) {
+            _navigationActions.send(NavigationAction.NavigateTo(destination, navOptions))
+        }
+
+        override suspend fun popUp() {
+            _navigationActions.send(NavigationAction.NavigateUp)
+        }
     }
-
-    override suspend fun popUp() {
-        _navigationActions.send(NavigationAction.NavigateUp)
-    }
-}
-

@@ -6,9 +6,9 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.6"
-activityCompose = "1.9.2"
-composeBom = "2024.09.03"
-uiTextGoogleFonts = "1.7.3"
+activityCompose = "1.9.3"
+composeBom = "2024.10.00"
+uiTextGoogleFonts = "1.7.4"
 # google
 google-ksp = "2.0.0-1.0.21"
 google-hilt = "2.51.1"
@@ -16,6 +16,10 @@ google-hilt = "2.51.1"
 room = "2.6.1"
 # datastore
 datastorePref = "1.1.1"
+ktlint = "12.1.1"
+detekt = "1.23.6"
+composeRule = "0.4.10"
+secret = "2.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -48,7 +52,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version = "2.8.3" }
-
+androidx-paging = { group = "androidx.paging", name = "paging-compose", version = "3.3.2" }
 # fonts
 androidx-ui-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 
@@ -63,6 +67,11 @@ network-profiler = { group = "com.localebro", name = "okhttpprofiler", version =
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+#rule
+rule-ktlint = { group = "io.nlopez.compose.rules", name = "ktlint",version.ref = "composeRule" }
+rule-detekt = { group = "io.nlopez.compose.rules", name = "detekt",version.ref = "composeRule" }
+secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secret" }
 
 [bundles]
 network = [
@@ -85,4 +94,7 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }
 google-hilt = { id = "com.google.dagger.hilt.android", version.ref = "google-hilt" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+secrets = {  id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secret"}
 

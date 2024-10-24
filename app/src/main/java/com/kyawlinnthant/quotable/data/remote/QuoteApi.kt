@@ -9,17 +9,17 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface QuoteApi {
-
     companion object {
         private const val QUOTE = "quotes/"
         const val RANDOM = "${QUOTE}random"
         const val AUTHORS = "authors"
-        const val AUTHORS_DETAIL = "${AUTHORS}/{id}"
+        const val AUTHORS_DETAIL = "$AUTHORS/{id}"
     }
 
     @GET(RANDOM)
     suspend fun randomQuotes(
-        @Query("limit") limit: Int, // default: 1,min: 1,max: 50
+        // default: 1,min: 1,max: 50
+        @Query("limit") limit: Int,
         @Query("maxLength") max: Int? = null,
         @Query("minLength") min: Int? = null,
         @Query("author") author: String? = null,
@@ -28,15 +28,19 @@ interface QuoteApi {
 
     @GET(AUTHORS)
     suspend fun fetchAuthors(
-        @Query("limit") limit: Int, // Min: 1   Max: 150   Default: 20
+        // Min: 1   Max: 150   Default: 20
+        @Query("limit") limit: Int,
+        // Min: 1   Default: 1
+        @Query("page") page: Int,
         @Query("slug") slug: String? = null,
-        @Query("sortBy") sortBy: String? = null, // Default: "name"   values: "dateAdded", "dateModified", "name", "quoteCount"
-        @Query("order") order: String? = null, // values: "asc", "desc"
-        @Query("page") page: Int? = null, //Min: 1   Default: 1
+        // Default: "name"   values: "dateAdded", "dateModified", "name", "quoteCount"
+        @Query("sortBy") sortBy: String? = null,
+        // values: "asc", "desc"
+        @Query("order") order: String? = null,
     ): Response<AuthorsResponse>
 
     @GET(AUTHORS_DETAIL)
     suspend fun fetchAuthor(
-        @Path("id") id: String
+        @Path("id") id: String,
     ): Response<AuthorResponse>
 }

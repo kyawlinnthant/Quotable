@@ -19,18 +19,22 @@ import com.kyawlinnthant.quotable.presentation.theme.dimen
 @Composable
 fun Indicator(
     modifier: Modifier = Modifier,
-    iterated: Boolean
+    iterated: Boolean,
 ) {
     val color =
-        if (iterated) MaterialTheme.colorScheme.primary
-        else MaterialTheme.colorScheme.onBackground.copy(MaterialTheme.dimen.defaultAlpha)
+        if (iterated) {
+            MaterialTheme.colorScheme.primary
+        } else {
+            MaterialTheme.colorScheme.onBackground.copy(MaterialTheme.dimen.defaultAlpha)
+        }
 
     Box(
-        modifier = modifier
-            .padding(MaterialTheme.dimen.small)
-            .clip(CircleShape)
-            .background(color)
-            .size(MaterialTheme.dimen.base)
+        modifier =
+            modifier
+                .padding(MaterialTheme.dimen.small)
+                .clip(CircleShape)
+                .background(color)
+                .size(MaterialTheme.dimen.base),
     )
 }
 

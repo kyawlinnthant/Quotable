@@ -4,15 +4,15 @@ import androidx.compose.runtime.Immutable
 import com.kyawlinnthant.quotable.domain.vo.Author
 import com.kyawlinnthant.quotable.presentation.common.RequestState
 
-
 @Immutable
 data class AuthorState(
-    val uiState: RequestState<Author>
+    val uiState: RequestState<Author>,
 ) {
     companion object {
-        val INITIAL = AuthorState(
-            uiState = RequestState.Idle
-        )
+        val INITIAL =
+            AuthorState(
+                uiState = RequestState.Idle,
+            )
     }
 }
 

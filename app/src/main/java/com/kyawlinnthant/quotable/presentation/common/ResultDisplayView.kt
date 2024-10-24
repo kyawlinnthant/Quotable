@@ -7,7 +7,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 
-
 @Composable
 fun <T> ResultDisplayView(
     onIdle: (@Composable () -> Unit)? = null,
@@ -20,7 +19,7 @@ fun <T> ResultDisplayView(
         targetState = requestState,
         transitionSpec = {
             fadeIn(tween(durationMillis = 300)) togetherWith
-                    fadeOut(tween(durationMillis = 300))
+                fadeOut(tween(durationMillis = 300))
         },
         label = "Content Animation",
     ) { state ->

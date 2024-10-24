@@ -1,5 +1,6 @@
 package com.kyawlinnthant.quotable.presentation.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -9,11 +10,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.kyawlinnthant.quotable.core.navigation.Destination
 import com.kyawlinnthant.quotable.core.navigation.NavigationAction
 import com.kyawlinnthant.quotable.presentation.author.AuthorScreen
 import com.kyawlinnthant.quotable.presentation.author.AuthorViewModel
-import com.kyawlinnthant.quotable.presentation.authors.AuthorsScreen
+import com.kyawlinnthant.quotable.presentation.authors.AuthorsScreen2
 import com.kyawlinnthant.quotable.presentation.authors.AuthorsViewModel
 import com.kyawlinnthant.quotable.presentation.mvi.CollectSideEffect
 import com.kyawlinnthant.quotable.presentation.onboard.OnBoardScreen
@@ -23,21 +25,22 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun QuotableGraph(
     startDestination: Destination,
-    navigationActions: Flow<NavigationAction>
+    navigationActions: Flow<NavigationAction>,
 ) {
     val navController = rememberNavController()
     CollectSideEffect(navigationActions) {
         when (it) {
-            is NavigationAction.NavigateTo -> navController.navigate(it.destination) {
-                it.navOptions(this)
-            }
+            is NavigationAction.NavigateTo ->
+                navController.navigate(it.destination) {
+                    it.navOptions(this)
+                }
 
             NavigationAction.NavigateUp -> navController.navigateUp()
         }
     }
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
     ) {
         navigation<Destination.OnBoardGraph>(
             startDestination = Destination.OnBoardScreen,
@@ -48,7 +51,7 @@ fun QuotableGraph(
                 OnBoardScreen(
                     uiState = uiState.value.uiState,
                     sideEffect = vm.uiEvent,
-                    onAction = vm::onAction
+                    onAction = vm::onAction,
                 )
             }
         }
@@ -59,10 +62,12 @@ fun QuotableGraph(
             composable<Destination.AuthorsScreen> {
                 val vm: AuthorsViewModel = hiltViewModel()
                 val uiState = vm.uiState.collectAsStateWithLifecycle()
-                AuthorsScreen(
-                    uiState = uiState.value.uiState,
+                val authors = uiState.value.authors.collectAsLazyPagingItems()
+                Log.d("LEE", "QuotableGraph: ${authors.itemSnapshotList.items.size}")
+                AuthorsScreen2(
+                    authors = uiState.value.authors.collectAsLazyPagingItems(),
                     sideEffect = vm.uiEvent,
-                    onAction = vm::onAction
+                    onAction = vm::onAction,
                 )
             }
 
@@ -76,7 +81,7 @@ fun QuotableGraph(
                 AuthorScreen(
                     uiState = uiState.value.uiState,
                     sideEffect = vm.uiEvent,
-                    onAction = vm::onAction
+                    onAction = vm::onAction,
                 )
             }
         }

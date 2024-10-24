@@ -4,7 +4,6 @@ import com.kyawlinnthant.quotable.domain.vo.Author
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class AuthorResponse(
     @SerialName("_id")
@@ -17,18 +16,19 @@ data class AuthorResponse(
     val name: String,
     val quoteCount: Int,
     val slug: String,
-    val quotes: List<QuotesResponse>? = null
+    val quotes: List<QuotesResponse>? = null,
 ) {
-    fun toDomain() = Author(
-        id = this.id,
-        bio = this.bio,
-        dateAdded = this.dateAdded,
-        dateModified = this.dateModified,
-        link = this.link,
-        name = this.name,
-        quoteCount = this.quoteCount,
-        slug = this.slug,
-        description = this.description,
-        quotes = this.quotes?.map { it.toDomain() } ?: emptyList()
-    )
+    fun toDomain() =
+        Author(
+            id = this.id,
+            bio = this.bio,
+            dateAdded = this.dateAdded,
+            dateModified = this.dateModified,
+            link = this.link,
+            name = this.name,
+            quoteCount = this.quoteCount,
+            slug = this.slug,
+            description = this.description,
+            quotes = this.quotes?.map { it.toDomain() } ?: emptyList(),
+        )
 }

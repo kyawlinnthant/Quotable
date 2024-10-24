@@ -19,12 +19,12 @@ object DataStorePreferencesModule {
     @Provides
     @Singleton
     fun provideDatastore(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             produceFile = {
                 context.preferencesDataStoreFile(ThemeDataSourceImpl.Companion.PREF_NAME)
-            }
+            },
         )
     }
 }

@@ -6,12 +6,13 @@ import com.kyawlinnthant.quotable.presentation.common.RequestState
 
 @Immutable
 data class OnBoardState(
-    val uiState: RequestState<List<Quote>>
+    val uiState: RequestState<List<Quote>>,
 ) {
     companion object {
-        val INITIAL = OnBoardState(
-            uiState = RequestState.Idle
-        )
+        val INITIAL =
+            OnBoardState(
+                uiState = RequestState.Idle,
+            )
     }
 }
 

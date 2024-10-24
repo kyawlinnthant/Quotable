@@ -10,7 +10,6 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-
 private val lightColorScheme =
     lightColorScheme(
         primary = md_theme_light_primary,
@@ -76,22 +75,23 @@ fun QuotableTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-    val quotableColor = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val quotableColor =
+        when {
+            dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+                val context = LocalContext.current
+                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            }
 
-        darkTheme -> darkColorScheme
-        else -> lightColorScheme
-    }
+            darkTheme -> darkColorScheme
+            else -> lightColorScheme
+        }
 
     MaterialTheme(
         colorScheme = quotableColor,
         typography = quotableTypo,
         shapes = quotableShape,
-        content = content
+        content = content,
     )
 }

@@ -6,8 +6,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    val navigator: Navigator
-): ViewModel(){
-    // todo : do splash screen
-}
+class MainViewModel
+    @Inject
+    constructor(
+        val navigator: Navigator,
+    ) : ViewModel() {
+        // todo : do splash screen
+    }

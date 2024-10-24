@@ -53,18 +53,18 @@ object DispatcherModule {
     @Provides
     @MainScope
     fun provideMainScope(
-        @MainDispatcher dispatcher: CoroutineDispatcher
+        @MainDispatcher dispatcher: CoroutineDispatcher,
     ): CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
 
     @Provides
     @DefaultScope
     fun provideDefaultScope(
-        @DefaultDispatcher dispatcher: CoroutineDispatcher
+        @DefaultDispatcher dispatcher: CoroutineDispatcher,
     ): CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
 
     @Provides
     @IoScope
     fun provideIoScope(
-        @IoDispatcher dispatcher: CoroutineDispatcher
+        @IoDispatcher dispatcher: CoroutineDispatcher,
     ): CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
 }

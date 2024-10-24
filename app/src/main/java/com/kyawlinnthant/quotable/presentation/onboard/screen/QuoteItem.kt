@@ -30,14 +30,12 @@ import com.kyawlinnthant.quotable.domain.vo.Quote
 import com.kyawlinnthant.quotable.presentation.theme.QuotableTheme
 import com.kyawlinnthant.quotable.presentation.theme.dimen
 
-
 @Composable
 fun QuoteItem(
     modifier: Modifier = Modifier,
     quote: Quote,
-    onItemClicked: () -> Unit
+    onItemClicked: () -> Unit,
 ) {
-
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(MaterialTheme.dimen.base2x),
@@ -48,14 +46,18 @@ fun QuoteItem(
                 checked = false,
                 enabled = true,
                 onCheckedChange = {},
-                colors = IconButtonDefaults.iconToggleButtonColors(
-                    contentColor = MaterialTheme.colorScheme.onBackground.copy(alpha = MaterialTheme.dimen.defaultAlpha),
-                    checkedContentColor = MaterialTheme.colorScheme.primary
-                )
+                colors =
+                    IconButtonDefaults.iconToggleButtonColors(
+                        contentColor =
+                            MaterialTheme.colorScheme.onBackground.copy(
+                                alpha = MaterialTheme.dimen.defaultAlpha,
+                            ),
+                        checkedContentColor = MaterialTheme.colorScheme.primary,
+                    ),
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.disabled_favourite),
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
         }
@@ -63,14 +65,14 @@ fun QuoteItem(
             LazyRow(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimen.base)) {
                 items(
                     items = quote.tags.toList(),
-                    key = { it }
+                    key = { it },
                 ) {
                     SuggestionChip(
                         onClick = {},
                         enabled = false,
                         label = {
                             Text(it, style = MaterialTheme.typography.labelSmall)
-                        }
+                        },
                     )
                 }
             }
@@ -94,18 +96,18 @@ fun QuoteItem(
         item {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(space = MaterialTheme.dimen.base)
+                horizontalArrangement = Arrangement.spacedBy(space = MaterialTheme.dimen.base),
             ) {
                 IconButton(onClick = onItemClicked) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_format_list_bulleted_24),
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
                 IconButton(onClick = {}) {
                     Icon(
                         painter = painterResource(id = R.drawable.round_share_24),
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
             }

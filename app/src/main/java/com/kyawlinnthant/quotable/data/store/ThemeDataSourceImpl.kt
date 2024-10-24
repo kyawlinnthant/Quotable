@@ -16,48 +16,49 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
-class ThemeDataSourceImpl @Inject constructor(
-    private val ds: DataStore<Preferences>,
-    @DispatcherModule.IoDispatcher private val io: CoroutineDispatcher
-) : ThemeDataSource {
+class ThemeDataSourceImpl
+    @Inject
+    constructor(
+        private val ds: DataStore<Preferences>,
+        @DispatcherModule.IoDispatcher private val io: CoroutineDispatcher,
+    ) : ThemeDataSource {
+        companion object {
+            const val PREF_NAME = "ds.pref"
+            val THEME = stringPreferencesKey("com.quotable.theme")
+            val DYNAMIC = booleanPreferencesKey("com.quotable.dynamic")
+        }
 
-    companion object {
-        const val PREF_NAME = "ds.pref"
-        val THEME = stringPreferencesKey("com.quotable.theme")
-        val DYNAMIC = booleanPreferencesKey("com.quotable.dynamic")
-    }
-
-    override suspend fun saveTheme(theme: ThemeType) {
-        withContext(io) {
-            ds.edit {
-                it[THEME] = theme.name
+        override suspend fun saveTheme(theme: ThemeType) {
+            withContext(io) {
+                ds.edit {
+                    it[THEME] = theme.name
+                }
             }
         }
-    }
 
-    override suspend fun retrieveTheme(): Flow<ThemeType> {
-        return ds.data.catch { e ->
-            if (e is IOException) emit(emptyPreferences()) else throw e
-        }.map { pref ->
-            pref[THEME]?.let {
-                ThemeType.valueOf(it)
-            } ?: ThemeType.valueOf(ThemeType.SYSTEM.name)
-        }.flowOn(io)
-    }
+        override suspend fun retrieveTheme(): Flow<ThemeType> {
+            return ds.data.catch { e ->
+                if (e is IOException) emit(emptyPreferences()) else throw e
+            }.map { pref ->
+                pref[THEME]?.let {
+                    ThemeType.valueOf(it)
+                } ?: ThemeType.valueOf(ThemeType.SYSTEM.name)
+            }.flowOn(io)
+        }
 
-    override suspend fun saveDynamic(enabled: Boolean) {
-        withContext(io) {
-            ds.edit {
-                it[DYNAMIC] = enabled
+        override suspend fun saveDynamic(enabled: Boolean) {
+            withContext(io) {
+                ds.edit {
+                    it[DYNAMIC] = enabled
+                }
             }
         }
-    }
 
-    override suspend fun retrieveDynamic(): Flow<Boolean> {
-        return ds.data.catch { e ->
-            if (e is IOException) emit(emptyPreferences()) else throw e
-        }.map { pref ->
-            pref[DYNAMIC] != false
-        }.flowOn(io)
+        override suspend fun retrieveDynamic(): Flow<Boolean> {
+            return ds.data.catch { e ->
+                if (e is IOException) emit(emptyPreferences()) else throw e
+            }.map { pref ->
+                pref[DYNAMIC] != false
+            }.flowOn(io)
+        }
     }
-}

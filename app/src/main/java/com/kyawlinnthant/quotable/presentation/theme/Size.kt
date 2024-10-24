@@ -1,6 +1,5 @@
 package com.kyawlinnthant.quotable.presentation.theme
 
-
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
@@ -8,7 +7,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-data class QuotableSize(
+data class Size(
     val one: Dp = 1.dp,
     val tiny: Dp = 2.dp,
     val small: Dp = 4.dp,
@@ -29,9 +28,9 @@ data class QuotableSize(
 )
 
 @Suppress("CompositionLocalNaming")
-val LocalSize = compositionLocalOf { QuotableSize() }
+val LocalSize = compositionLocalOf { Size() }
 
-val MaterialTheme.dimen: QuotableSize
+val MaterialTheme.dimen: Size
     @Composable
     @ReadOnlyComposable
     get() = LocalSize.current

@@ -18,25 +18,26 @@ import com.kyawlinnthant.quotable.domain.vo.Quote
 fun OnBoardDataView(
     modifier: Modifier = Modifier,
     quotes: List<Quote>,
-    onItemClicked: () -> Unit
+    onItemClicked: () -> Unit,
 ) {
     val pagerState = rememberPagerState(pageCount = { quotes.size })
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
         HorizontalPager(
             state = pagerState,
-            modifier = modifier.fillMaxSize()
+            modifier = modifier.fillMaxSize(),
         ) { page ->
             val currentQuote = quotes[page]
             QuoteItem(
                 quote = currentQuote,
-                onItemClicked = onItemClicked
+                onItemClicked = onItemClicked,
             )
         }
         Row(
-            modifier = modifier
-                .wrapContentHeight()
-                .fillMaxWidth()
-                .navigationBarsPadding(),
+            modifier =
+                modifier
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    .navigationBarsPadding(),
             horizontalArrangement = Arrangement.Center,
         ) {
             repeat(pagerState.pageCount) { iteration ->
@@ -45,6 +46,4 @@ fun OnBoardDataView(
             }
         }
     }
-
 }
-
