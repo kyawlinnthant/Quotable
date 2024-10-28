@@ -1,14 +1,18 @@
 package com.kyawlinnthant.quotable.presentation.theme
 
+import android.app.Activity
 import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
+import com.kyawlinnthant.quotable.data.store.ThemeType
 
 private val lightColorScheme =
     lightColorScheme(
@@ -70,24 +74,57 @@ private val darkColorScheme =
         inversePrimary = md_theme_dark_inversePrimary,
     )
 
+sealed interface AppTheme {
+    data object DynamicDark : AppTheme
+
+    data object DynamicLight : AppTheme
+
+    data object Dark : AppTheme
+
+    data object Light : AppTheme
+}
+
+infix fun ThemeType.asAppTheme(enabledDarkMode: Boolean): AppTheme {
+    return when (this) {
+        ThemeType.DARK -> AppTheme.Dark
+        ThemeType.LIGHT -> AppTheme.Light
+        ThemeType.SYSTEM -> if (enabledDarkMode) AppTheme.DynamicDark else AppTheme.DynamicLight
+    }
+}
+
 @Composable
 fun QuotableTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    appTheme: AppTheme,
     content: @Composable () -> Unit,
 ) {
-    val quotableColor =
-        when {
-            dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-                val context = LocalContext.current
-                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-            }
+    val context = LocalContext.current
+    val isDynamicColorAvailable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
-            darkTheme -> darkColorScheme
-            else -> lightColorScheme
+    val quotableColor =
+        when (appTheme) {
+            AppTheme.Dark -> darkColorScheme
+            AppTheme.Light -> lightColorScheme
+            AppTheme.DynamicDark -> if (isDynamicColorAvailable) dynamicDarkColorScheme(context) else darkColorScheme
+            AppTheme.DynamicLight -> if (isDynamicColorAvailable) dynamicLightColorScheme(context) else lightColorScheme
         }
 
+    val isDarkIcon =
+        when (appTheme) {
+            AppTheme.Dark -> false
+            AppTheme.DynamicDark -> false
+            AppTheme.DynamicLight -> true
+            AppTheme.Light -> true
+        }
+
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = isDarkIcon
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = isDarkIcon
+        }
+    }
     MaterialTheme(
         colorScheme = quotableColor,
         typography = quotableTypo,

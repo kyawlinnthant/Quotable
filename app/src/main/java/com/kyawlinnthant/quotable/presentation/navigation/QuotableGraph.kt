@@ -13,13 +13,13 @@ import androidx.navigation.toRoute
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kyawlinnthant.quotable.core.navigation.Destination
 import com.kyawlinnthant.quotable.core.navigation.NavigationAction
-import com.kyawlinnthant.quotable.presentation.author.AuthorScreen
-import com.kyawlinnthant.quotable.presentation.author.AuthorViewModel
-import com.kyawlinnthant.quotable.presentation.authors.AuthorsScreen2
-import com.kyawlinnthant.quotable.presentation.authors.AuthorsViewModel
+import com.kyawlinnthant.quotable.presentation.feature.author.AuthorScreen
+import com.kyawlinnthant.quotable.presentation.feature.author.AuthorViewModel
+import com.kyawlinnthant.quotable.presentation.feature.authors.AuthorsScreen2
+import com.kyawlinnthant.quotable.presentation.feature.authors.AuthorsViewModel
+import com.kyawlinnthant.quotable.presentation.feature.onboard.OnBoardScreen
+import com.kyawlinnthant.quotable.presentation.feature.onboard.OnBoardViewModel
 import com.kyawlinnthant.quotable.presentation.mvi.CollectSideEffect
-import com.kyawlinnthant.quotable.presentation.onboard.OnBoardScreen
-import com.kyawlinnthant.quotable.presentation.onboard.OnBoardViewModel
 import kotlinx.coroutines.flow.Flow
 
 @Composable
@@ -52,6 +52,9 @@ fun QuotableGraph(
                     uiState = uiState.value.uiState,
                     sideEffect = vm.uiEvent,
                     onAction = vm::onAction,
+                    shouldShowDialog = uiState.value.shouldShowDialog,
+                    isDynamic = uiState.value.enabledDynamic,
+                    appTheme = uiState.value.appTheme,
                 )
             }
         }

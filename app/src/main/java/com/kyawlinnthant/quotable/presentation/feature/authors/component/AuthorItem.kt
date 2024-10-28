@@ -1,16 +1,15 @@
-package com.kyawlinnthant.quotable.presentation.authors.component
+package com.kyawlinnthant.quotable.presentation.feature.authors.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.kyawlinnthant.quotable.domain.vo.Author
-import com.kyawlinnthant.quotable.presentation.theme.QuotableTheme
+import com.kyawlinnthant.quotable.presentation.preview.LightModePreview
 
 @Composable
 fun AuthorItem(
@@ -34,9 +33,7 @@ fun AuthorItem(
 @Composable
 @Preview
 private fun AuthorItemPreview() {
-    QuotableTheme {
-        Surface {
-            AuthorItem(author = Author.MOCK) {}
-        }
+    LightModePreview {
+        AuthorItem(author = Author.MOCK) {}
     }
 }

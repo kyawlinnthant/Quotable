@@ -1,4 +1,4 @@
-package com.kyawlinnthant.quotable.presentation.authors
+package com.kyawlinnthant.quotable.presentation.feature.authors
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

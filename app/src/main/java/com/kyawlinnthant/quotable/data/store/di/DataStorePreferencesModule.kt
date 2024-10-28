@@ -1,6 +1,7 @@
 package com.kyawlinnthant.quotable.data.store.di
 
 import android.content.Context
+import android.os.Build
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
@@ -16,6 +17,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataStorePreferencesModule {
+    @Provides
+    @Singleton
+    fun provideBuild(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
     @Provides
     @Singleton
     fun provideDatastore(

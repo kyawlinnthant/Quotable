@@ -1,4 +1,4 @@
-package com.kyawlinnthant.quotable.presentation.onboard.screen
+package com.kyawlinnthant.quotable.presentation.feature.onboard.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

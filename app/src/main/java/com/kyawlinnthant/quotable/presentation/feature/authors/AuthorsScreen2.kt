@@ -1,4 +1,4 @@
-package com.kyawlinnthant.quotable.presentation.authors
+package com.kyawlinnthant.quotable.presentation.feature.authors
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
@@ -26,7 +26,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.kyawlinnthant.quotable.domain.vo.Author
-import com.kyawlinnthant.quotable.presentation.authors.component.AuthorItem
+import com.kyawlinnthant.quotable.presentation.feature.authors.component.AuthorItem
 import com.kyawlinnthant.quotable.presentation.mvi.CollectSideEffect
 import com.kyawlinnthant.quotable.presentation.theme.dimen
 import kotlinx.coroutines.flow.Flow

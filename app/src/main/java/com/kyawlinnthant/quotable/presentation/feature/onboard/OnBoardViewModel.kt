@@ -1,10 +1,11 @@
-package com.kyawlinnthant.quotable.presentation.onboard
+package com.kyawlinnthant.quotable.presentation.feature.onboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kyawlinnthant.quotable.core.navigation.Destination
 import com.kyawlinnthant.quotable.core.navigation.Navigator
 import com.kyawlinnthant.quotable.data.remote.NetworkResult
+import com.kyawlinnthant.quotable.data.store.ThemeType
 import com.kyawlinnthant.quotable.domain.repo.QuoteRepository
 import com.kyawlinnthant.quotable.presentation.common.RequestState
 import com.kyawlinnthant.quotable.presentation.mvi.MVI
@@ -25,11 +26,54 @@ class OnBoardViewModel
         ) {
         init {
             fetchQuotes()
+            getDynamicColor()
+            getAppTheme()
         }
 
         override fun onAction(uiAction: OnBoardAction) {
             when (uiAction) {
                 is OnBoardAction.OnClickAuthor -> onItemClick()
+                is OnBoardAction.OnChooseDynamic -> saveDynamicColor(uiAction.enabled)
+                is OnBoardAction.OnChooseTheme -> saveAppTheme(uiAction.theme)
+                is OnBoardAction.OnChangeDialogState -> updateDialogState(uiAction.enabled)
+            }
+        }
+
+        private fun updateDialogState(enabled: Boolean) {
+            updateUiState {
+                copy(shouldShowDialog = enabled)
+            }
+        }
+
+        private fun saveDynamicColor(enabled: Boolean) {
+            viewModelScope.launch {
+                repository.saveDynamic(enabled)
+            }
+        }
+
+        private fun saveAppTheme(appTheme: ThemeType) {
+            viewModelScope.launch {
+                repository.saveTheme(appTheme)
+            }
+        }
+
+        private fun getDynamicColor() {
+            viewModelScope.launch {
+                repository.getDynamic().collect {
+                    updateUiState {
+                        copy(enabledDynamic = it)
+                    }
+                }
+            }
+        }
+
+        private fun getAppTheme() {
+            viewModelScope.launch {
+                repository.getTheme().collect {
+                    updateUiState {
+                        copy(appTheme = it)
+                    }
+                }
             }
         }
 

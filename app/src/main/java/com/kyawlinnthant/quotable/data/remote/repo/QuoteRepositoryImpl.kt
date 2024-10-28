@@ -9,6 +9,8 @@ import com.kyawlinnthant.quotable.core.dispatcher.DispatcherModule
 import com.kyawlinnthant.quotable.data.remote.NetworkResult
 import com.kyawlinnthant.quotable.data.remote.QuoteApi
 import com.kyawlinnthant.quotable.data.remote.safeApiCall
+import com.kyawlinnthant.quotable.data.store.ThemeDataSource
+import com.kyawlinnthant.quotable.data.store.ThemeType
 import com.kyawlinnthant.quotable.domain.repo.QuoteRepository
 import com.kyawlinnthant.quotable.domain.vo.Author
 import com.kyawlinnthant.quotable.domain.vo.Quote
@@ -23,6 +25,7 @@ class QuoteRepositoryImpl
     @Inject
     constructor(
         private val api: QuoteApi,
+        private val dataSource: ThemeDataSource,
         @DispatcherModule.IoDispatcher private val io: CoroutineDispatcher,
     ) : QuoteRepository {
         override suspend fun fetchRandomQuotes(): NetworkResult<List<Quote>> {
@@ -91,5 +94,25 @@ class QuoteRepositoryImpl
                     it.toDomain()
                 }
             }.flowOn(io)
+        }
+
+        override suspend fun saveTheme(theme: ThemeType) {
+            withContext(io) {
+                dataSource.saveTheme(theme)
+            }
+        }
+
+        override suspend fun getTheme(): Flow<ThemeType> {
+            return dataSource.retrieveTheme().flowOn(io)
+        }
+
+        override suspend fun saveDynamic(enabled: Boolean) {
+            withContext(io) {
+                dataSource.saveDynamic(enabled)
+            }
+        }
+
+        override suspend fun getDynamic(): Flow<Boolean> {
+            return dataSource.retrieveDynamic().flowOn(io)
         }
     }

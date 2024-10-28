@@ -1,4 +1,4 @@
-package com.kyawlinnthant.quotable.presentation.authors
+package com.kyawlinnthant.quotable.presentation.feature.authors
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -19,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.kyawlinnthant.quotable.domain.vo.Author
-import com.kyawlinnthant.quotable.presentation.authors.AuthorsAction.OnClickAuthor
 import com.kyawlinnthant.quotable.presentation.common.RequestState
 import com.kyawlinnthant.quotable.presentation.mvi.CollectSideEffect
 import com.kyawlinnthant.quotable.presentation.theme.dimen
@@ -73,7 +72,7 @@ fun AuthorsScreen(
                                         .fillMaxWidth()
                                         .padding(MaterialTheme.dimen.base)
                                         .clickable {
-                                            onAction(OnClickAuthor(author.id))
+                                            onAction(AuthorsAction.OnClickAuthor(author.id))
                                         },
                                 text = author.name,
                                 style = MaterialTheme.typography.bodyLarge,

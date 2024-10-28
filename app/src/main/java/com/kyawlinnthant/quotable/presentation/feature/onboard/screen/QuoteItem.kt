@@ -1,4 +1,4 @@
-package com.kyawlinnthant.quotable.presentation.onboard.screen
+package com.kyawlinnthant.quotable.presentation.feature.onboard.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,6 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,7 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.kyawlinnthant.quotable.R
 import com.kyawlinnthant.quotable.domain.vo.Quote
-import com.kyawlinnthant.quotable.presentation.theme.QuotableTheme
+import com.kyawlinnthant.quotable.presentation.preview.LightModePreview
 import com.kyawlinnthant.quotable.presentation.theme.dimen
 
 @Composable
@@ -122,9 +121,7 @@ fun QuoteItem(
 @Composable
 @Preview
 private fun QuoteItemPreview() {
-    QuotableTheme {
-        Surface {
-            QuoteItem(quote = Quote.MOCK) {}
-        }
+    LightModePreview {
+        QuoteItem(quote = Quote.MOCK) {}
     }
 }

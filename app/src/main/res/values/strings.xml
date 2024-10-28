@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Quotable</string>
+    <string name="app_appearance">Application Appearance</string>
+    <string name="dark_mode_preference">Dark mode preference</string>
+    <string name="mode_default">System default</string>
+    <string name="mode_light">Light mode</string>
+    <string name="mode_dark">Dark mode</string>
+
+    <string name="dynamic_preference">Dynamic color preference</string>
+    <string name="dynamic_enabled">Enabled dynamic color</string>
+
+    <string name="ok">OK</string>
 </resources>

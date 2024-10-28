@@ -1,4 +1,4 @@
-package com.kyawlinnthant.quotable.presentation.author
+package com.kyawlinnthant.quotable.presentation.feature.author
 
 import androidx.compose.runtime.Immutable
 import com.kyawlinnthant.quotable.domain.vo.Author
