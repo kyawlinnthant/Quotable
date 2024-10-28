@@ -107,10 +107,9 @@ fun ThemeDialog(
         confirmButton = {
             TextButton(onClick = onDismiss) {
                 Text(
-                    text = stringResource(R.string.ok),
+                    text = stringResource(R.string.confirm),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.secondary,
-                    modifier = modifier.padding(horizontal = MaterialTheme.dimen.base),
                 )
             }
         },

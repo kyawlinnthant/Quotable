@@ -30,7 +30,7 @@ class QuoteRepositoryImpl
     ) : QuoteRepository {
         override suspend fun fetchRandomQuotes(): NetworkResult<List<Quote>> {
             return withContext(io) {
-                when (val response = safeApiCall { api.randomQuotes(limit = 5) }) {
+                when (val response = safeApiCall { api.randomQuotes(limit = 20) }) {
                     is NetworkResult.Failed -> {
                         NetworkResult.Failed(error = response.error)
                     }

@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.androidx.ui.google.fonts)
     implementation(libs.androidx.navigation)
     implementation(libs.androidx.paging)
+    implementation(libs.androidx.splash)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

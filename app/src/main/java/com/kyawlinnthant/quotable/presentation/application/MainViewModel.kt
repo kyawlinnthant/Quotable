@@ -20,7 +20,7 @@ class MainViewModel
         private val isAboveS: Boolean,
         private val repository: QuoteRepository,
     ) : ViewModel() {
-        val appTheme: StateFlow<AppTheme> field = MutableStateFlow<AppTheme>(AppTheme.DynamicDark)
+        val appTheme: StateFlow<AppTheme?> field = MutableStateFlow<AppTheme?>(null)
 
         init {
             getAppTheme()

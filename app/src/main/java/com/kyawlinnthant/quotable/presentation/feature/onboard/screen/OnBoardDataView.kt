@@ -1,7 +1,7 @@
 package com.kyawlinnthant.quotable.presentation.feature.onboard.screen
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,10 +21,15 @@ fun OnBoardDataView(
     onItemClicked: () -> Unit,
 ) {
     val pagerState = rememberPagerState(pageCount = { quotes.size })
-    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom,
+    ) {
         HorizontalPager(
             state = pagerState,
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize().weight(1f),
         ) { page ->
             val currentQuote = quotes[page]
             QuoteItem(
