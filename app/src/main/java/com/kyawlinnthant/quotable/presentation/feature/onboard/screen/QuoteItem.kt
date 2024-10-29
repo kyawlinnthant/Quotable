@@ -85,8 +85,20 @@ fun QuoteItem(
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.spacedBy(space = MaterialTheme.dimen.tiny),
             ) {
-                Text(quote.dateAdded, style = MaterialTheme.typography.labelSmall)
-                Text(quote.author, style = MaterialTheme.typography.labelLarge)
+                Text(
+                    quote.dateAdded,
+                    style =
+                        MaterialTheme.typography.labelSmall.copy(
+                            color = MaterialTheme.colorScheme.tertiary,
+                        ),
+                )
+                Text(
+                    quote.author,
+                    style =
+                        MaterialTheme.typography.labelLarge.copy(
+                            color = MaterialTheme.colorScheme.primary,
+                        ),
+                )
             }
         }
         item {

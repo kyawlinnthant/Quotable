@@ -18,7 +18,7 @@ data class AuthorState(
 
 @Immutable
 sealed interface AuthorAction {
-    data object OnBack : AuthorAction
+    data class OnQuoteClicked(val id: String) : AuthorAction
 }
 
 @Immutable

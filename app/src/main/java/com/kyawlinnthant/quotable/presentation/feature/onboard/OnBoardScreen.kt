@@ -26,7 +26,7 @@ import com.kyawlinnthant.quotable.presentation.common.RequestState
 import com.kyawlinnthant.quotable.presentation.common.ResultDisplayView
 import com.kyawlinnthant.quotable.presentation.common.dialog.ThemeDialog
 import com.kyawlinnthant.quotable.presentation.feature.onboard.screen.OnBoardDataView
-import com.kyawlinnthant.quotable.presentation.mvi.CollectSideEffect
+import com.kyawlinnthant.quotable.presentation.state.CollectSideEffect
 import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalMaterial3Api::class)

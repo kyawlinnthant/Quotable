@@ -8,8 +8,8 @@ import com.kyawlinnthant.quotable.data.remote.NetworkResult
 import com.kyawlinnthant.quotable.data.store.ThemeType
 import com.kyawlinnthant.quotable.domain.repo.QuoteRepository
 import com.kyawlinnthant.quotable.presentation.common.RequestState
-import com.kyawlinnthant.quotable.presentation.mvi.MVI
-import com.kyawlinnthant.quotable.presentation.mvi.mvi
+import com.kyawlinnthant.quotable.presentation.state.StateManager
+import com.kyawlinnthant.quotable.presentation.state.manage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,7 +21,7 @@ class OnBoardViewModel
         private val repository: QuoteRepository,
         private val navigator: Navigator,
     ) : ViewModel(),
-        MVI<OnBoardState, OnBoardAction, OnBoardEvent> by mvi(
+        StateManager<OnBoardState, OnBoardAction, OnBoardEvent> by manage(
             initialUiState = OnBoardState.INITIAL,
         ) {
         init {

@@ -27,7 +27,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.kyawlinnthant.quotable.domain.vo.Author
 import com.kyawlinnthant.quotable.presentation.feature.authors.component.AuthorItem
-import com.kyawlinnthant.quotable.presentation.mvi.CollectSideEffect
+import com.kyawlinnthant.quotable.presentation.state.CollectSideEffect
 import com.kyawlinnthant.quotable.presentation.theme.dimen
 import kotlinx.coroutines.flow.Flow
 

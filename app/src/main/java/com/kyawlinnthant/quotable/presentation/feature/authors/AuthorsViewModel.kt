@@ -6,8 +6,8 @@ import androidx.paging.cachedIn
 import com.kyawlinnthant.quotable.core.navigation.Destination
 import com.kyawlinnthant.quotable.core.navigation.Navigator
 import com.kyawlinnthant.quotable.domain.repo.QuoteRepository
-import com.kyawlinnthant.quotable.presentation.mvi.MVI
-import com.kyawlinnthant.quotable.presentation.mvi.mvi
+import com.kyawlinnthant.quotable.presentation.state.StateManager
+import com.kyawlinnthant.quotable.presentation.state.manage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
@@ -21,7 +21,7 @@ class AuthorsViewModel
         private val repository: QuoteRepository,
         private val navigator: Navigator,
     ) : ViewModel(),
-        MVI<AuthorsState, AuthorsAction, AuthorsEvent> by mvi(
+        StateManager<AuthorsState, AuthorsAction, AuthorsEvent> by manage(
             initialUiState = AuthorsState.INITIAL,
         ) {
         init {

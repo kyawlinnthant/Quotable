@@ -20,7 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.kyawlinnthant.quotable.domain.vo.Author
 import com.kyawlinnthant.quotable.presentation.common.RequestState
-import com.kyawlinnthant.quotable.presentation.mvi.CollectSideEffect
+import com.kyawlinnthant.quotable.presentation.state.CollectSideEffect
 import com.kyawlinnthant.quotable.presentation.theme.dimen
 import kotlinx.coroutines.flow.Flow
 

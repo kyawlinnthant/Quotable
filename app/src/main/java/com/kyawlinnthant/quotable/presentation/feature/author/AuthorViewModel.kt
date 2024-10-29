@@ -1,13 +1,14 @@
 package com.kyawlinnthant.quotable.presentation.feature.author
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kyawlinnthant.quotable.core.navigation.Navigator
 import com.kyawlinnthant.quotable.data.remote.NetworkResult
 import com.kyawlinnthant.quotable.domain.repo.QuoteRepository
 import com.kyawlinnthant.quotable.presentation.common.RequestState
-import com.kyawlinnthant.quotable.presentation.mvi.MVI
-import com.kyawlinnthant.quotable.presentation.mvi.mvi
+import com.kyawlinnthant.quotable.presentation.state.StateManager
+import com.kyawlinnthant.quotable.presentation.state.manage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,12 +20,12 @@ class AuthorViewModel
         private val repository: QuoteRepository,
         private val navigator: Navigator,
     ) : ViewModel(),
-        MVI<AuthorState, AuthorAction, AuthorEvent> by mvi(
+        StateManager<AuthorState, AuthorAction, AuthorEvent> by manage(
             initialUiState = AuthorState.INITIAL,
         ) {
         override fun onAction(uiAction: AuthorAction) {
             when (uiAction) {
-                AuthorAction.OnBack -> onBack()
+                is AuthorAction.OnQuoteClicked -> navigateToQuote(uiAction.id)
             }
         }
 
@@ -45,7 +46,8 @@ class AuthorViewModel
             }
         }
 
-        private fun onBack() {
+        private fun navigateToQuote(id: String) {
+            Log.d("TAG", "navigateToQuote: $id")
             viewModelScope.launch {
                 navigator.popUp()
             }

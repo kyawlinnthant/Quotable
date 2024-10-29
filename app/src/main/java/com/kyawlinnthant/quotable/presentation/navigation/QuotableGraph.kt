@@ -19,7 +19,7 @@ import com.kyawlinnthant.quotable.presentation.feature.authors.AuthorsScreen2
 import com.kyawlinnthant.quotable.presentation.feature.authors.AuthorsViewModel
 import com.kyawlinnthant.quotable.presentation.feature.onboard.OnBoardScreen
 import com.kyawlinnthant.quotable.presentation.feature.onboard.OnBoardViewModel
-import com.kyawlinnthant.quotable.presentation.mvi.CollectSideEffect
+import com.kyawlinnthant.quotable.presentation.state.CollectSideEffect
 import kotlinx.coroutines.flow.Flow
 
 @Composable

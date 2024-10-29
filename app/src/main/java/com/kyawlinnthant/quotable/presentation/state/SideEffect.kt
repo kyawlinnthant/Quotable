@@ -1,4 +1,4 @@
-package com.kyawlinnthant.quotable.presentation.mvi
+package com.kyawlinnthant.quotable.presentation.state
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
